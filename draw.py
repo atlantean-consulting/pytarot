@@ -18,6 +18,9 @@ def main():
     for index in indices:
         print(tarot.format_card(index))
 
+    with open("l_dr", "w") as f:
+        f.write(",".join(tarot.braille(i) for i in indices))
+
 
 if __name__ == "__main__":
     main()

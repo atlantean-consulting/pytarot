@@ -67,6 +67,10 @@ def main():
             print(f"  {pos}. {tarot.format_card(index)}")
     print()
 
+    if spread:
+        with open("l_div", "w") as f:
+            f.write(",".join(tarot.braille(i) for i in spread))
+
 
 if __name__ == "__main__":
     main()
