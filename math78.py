@@ -410,6 +410,8 @@ def repl():
         if line.lower() == "help":
             print_help()
             continue
+        if line.lower() == "n":
+            continue
 
         # Step 1: parse cards
         indices = resolve_input(line)
@@ -431,6 +433,8 @@ def repl():
                 break
             if ops_line.lower() in ("quit", "exit", "q"):
                 return
+            if ops_line.lower() == "n":
+                break
 
             result = run_operations(indices, ops_line)
             if result is not None:
