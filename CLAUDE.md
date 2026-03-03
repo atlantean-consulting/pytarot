@@ -42,4 +42,5 @@ python math78.py "AW,NC,K$" "add,root"    # operate on specific cards
 
 - **Rejection sampling** in `tarot.draw()`: bytes >= 234 (78*3) are discarded to eliminate modulo bias, since 256 is not divisible by 78.
 - **Repeat defaults differ by tool**: `draw.py` defaults to no repeats (`--repeats` to allow); `divine.py` defaults to repeats (`--no-repeats` to suppress). The library function `tarot.draw(n, replace=True)` defaults to replacement.
+- **REPL chaining**: In the `math78.py` REPL, each operation's result replaces the working set. Subsequent operations act on the previous result, not the original input. This means `add` then `root` applies root to the single sum, not to the original cards. Operations like `root` are no-ops on values already < 78.
 - Card ordering: Major Arcana (0–21), Wands (22–35), Cups (36–49), Swords (50–63), Pentacles (64–77). Maps to Unicode Playing Cards block (Clubs=Wands, Hearts=Cups, Spades=Swords, Diamonds=Pentacles).
