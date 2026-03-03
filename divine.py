@@ -2,8 +2,10 @@
 """Interactive tarot divination REPL.
 
 Press any key to draw a card. Press 'q' to quit and see your spread.
+Use --no-repeats to draw without replacement.
 """
 
+import argparse
 import sys
 import tty
 import termios
@@ -23,7 +25,12 @@ def getch():
 
 
 def main():
+    parser = argparse.ArgumentParser(description="Interactive tarot divination")
+    parser.add_argument("--no-repeats", action="store_true", help="each card can only appear once")
+    args = parser.parse_args()
+
     spread = []
+    seen = set()
 
     print("╔══════════════════════════════════════╗")
     print("║   /dev/urandom tarot divination      ║")
@@ -37,7 +44,15 @@ def main():
         if ch in ('q', 'Q', '\x03'):  # q or Ctrl-C
             break
 
+        if args.no_repeats and len(seen) >= tarot.NUM_CARDS:
+            print("  All 78 cards have been drawn.")
+            break
+
         index = tarot.draw_one()
+        if args.no_repeats:
+            while index in seen:
+                index = tarot.draw_one()
+        seen.add(index)
         spread.append(index)
         position = len(spread)
         print(f"  {position}. {tarot.format_card(index)}")
